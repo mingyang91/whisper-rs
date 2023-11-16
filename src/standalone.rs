@@ -1,6 +1,7 @@
 //! Standalone functions that have no associated type.
 
 use std::ffi::{c_int, CStr, CString};
+use std::ptr::null_mut;
 
 /// Return the id of the specified language, returns -1 if not found
 ///
@@ -57,8 +58,8 @@ pub fn get_lang_str(id: i32) -> Option<&'static str> {
 ///
 /// # C++ equivalent
 /// `void whisper_set_log_callback(whisper_log_callback callback);`
-pub unsafe fn set_log_callback(callback: whisper_rs_sys::whisper_log_callback) {
-    unsafe { whisper_rs_sys::whisper_set_log_callback(callback) }
+pub unsafe fn set_log_callback(callback: whisper_rs_sys::ggml_log_callback) {
+    unsafe { whisper_rs_sys::whisper_log_set(callback, null_mut()) }
 }
 
 /// Print system information.
